@@ -10,7 +10,7 @@ import java.util.Scanner;
 @Component
 public class AuthorController {
 
-    private Scanner in = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
     private final AuthorService authorService;
 
     public AuthorController(AuthorService authorService) {
@@ -42,7 +42,7 @@ public class AuthorController {
 
     public Optional<Author> getAuthorById(){
         System.out.println("Enter author id: ");
-        Long id = in.nextLong();
+        Long id = sc.nextLong();
         return authorService.getAuthorById(id);
     }
 

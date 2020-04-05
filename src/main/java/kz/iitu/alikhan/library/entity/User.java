@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "Users")
 public class User {
 
     @Id
@@ -38,5 +39,21 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<RentBooks> getRentBooks() {
+        return rentBooks;
+    }
+
+    public void setRentBooks(List<RentBooks> rentBooks) {
+        this.rentBooks = rentBooks;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

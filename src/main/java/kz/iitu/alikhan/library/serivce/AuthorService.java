@@ -9,7 +9,7 @@ import java.util.Optional;
 @Component
 public class AuthorService {
 
-    private final AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
 
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;

@@ -10,7 +10,7 @@ import java.util.Scanner;
 @Component
 public class MainController {
 
-    private Scanner in = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
     //Services
     private final MainService mainService;
 
@@ -35,24 +35,26 @@ public class MainController {
                 issueBook();
                 break;
             case 2:
-                shooAllUsers();
+                showAllUsers();
                 break;
             case 3:
-                returnBook();
+                returnTheBook();
                 break;
             default:
-                System.out.println("There is no such option");
+                System.out.println("Option does not exist");
                 break;
         }
     }
 
-    public void shooAllUsers(){
+    public void showAllUsers(){
         mainService.showAllUsers();
     }
 
     public User findUserById(){
+        System.out.println("Issue book to...");
         System.out.println("Enter user ID: ");
-        Long id = in.nextLong();
+        Long id = sc.nextLong();
+
         return mainService.findUserById(id).orElse(null);
     }
 
@@ -62,7 +64,7 @@ public class MainController {
         mainService.issueBook(user, book);
     }
 
-    public void returnBook(){
+    public void returnTheBook(){
         User user = findUserById();
         Book book = bookController.findBookById();
         mainService.returnBook(user, book);

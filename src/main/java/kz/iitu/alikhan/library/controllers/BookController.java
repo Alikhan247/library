@@ -14,7 +14,7 @@ import java.util.Set;
 @Component
 public class BookController {
 
-    private Scanner in = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
 
 
     private final BookService bookService;
@@ -36,9 +36,6 @@ public class BookController {
                 showAllBooks();
                 break;
             case 2:
-//                addNewBook();
-                break;
-            case 3:
                 findBook();
                 break;
             default:
@@ -50,15 +47,17 @@ public class BookController {
     public void showAllBooks(){
         bookService.showAllBooks();
     }
+
+
     public Book findBookById(){
         System.out.println("Enter book ID: ");
-        Long id = in.nextLong();
+        Long id = sc.nextLong();
         return bookService.findBookById(id).orElse(null);
     }
 
     public void findBook(){
-        System.out.println("Find book by author name, title or description");
-        String search = in.nextLine();
+        System.out.println("Look in book by name or description");
+        String search = sc.nextLine();
         search = search.toLowerCase();
         bookService.findBook(search);
     }

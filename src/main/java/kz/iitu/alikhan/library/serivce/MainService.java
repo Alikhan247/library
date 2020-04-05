@@ -15,9 +15,9 @@ import java.util.Optional;
 @Component
 public class MainService {
 
-    private final UserRepository userRepository;
-    private final BookRepository bookRepository;
-    private final RentBooksRepository rentBooksRepository;
+    private UserRepository userRepository;
+    private BookRepository bookRepository;
+    private RentBooksRepository rentBooksRepository;
 
     public MainService(UserRepository userRepository, BookRepository bookRepository, RentBooksRepository rentBooksRepository) {
         this.userRepository = userRepository;
@@ -26,6 +26,7 @@ public class MainService {
     }
 
     public Optional<User> findUserById(Long id) {
+        System.out.println("Test");
         return userRepository.findById(id);
     }
 
@@ -34,10 +35,11 @@ public class MainService {
             if (book.isAvailable() == true) {
                 RentBooks issuedBooks = new RentBooks(user, book);
                 rentBooksRepository.save(issuedBooks);
+
                 book.setAvailable(false);
                 bookRepository.save(book);
             } else {
-                System.out.println("The book is not available");
+                System.out.println("Sorry, but the book is not available at the moment");
             }
         }
     }
@@ -58,13 +60,7 @@ public class MainService {
         }
     }
 
-    private boolean isUserExist(User user) {
-        if (user == null) {
-            System.out.println("Error, user does not exist");
-            return true;
-        }
-        return false;
-    }
+
 
     public void showAllUsers() {
         for (User user : userRepository.findAll()) {
@@ -72,4 +68,11 @@ public class MainService {
         }
     }
 
+    private boolean isUserExist(User user) {
+        if (user == null) {
+            System.out.println("Error, user does not exist");
+            return false;
+        } else
+            return true;
+    }
 }
