@@ -1,49 +1,38 @@
 package kz.iitu.alikhan.library.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import kz.iitu.alikhan.library.entity.Author;
 import kz.iitu.alikhan.library.serivce.AuthorService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-@Component
+@RestController
+@RequestMapping("/authors")
 public class AuthorController {
-
-    private Scanner sc = new Scanner(System.in);
     private final AuthorService authorService;
 
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
-    public void showMenu(){
-        System.out.println("1. Show all authors");
-        System.out.println("2. Add new book");
+
+    @GetMapping("")
+    public List<Author> showAllAuthors(){
+        return authorService.showAllAuthors();
     }
 
-    public void choice(int choice){
-        switch (choice){
-            case 1:
-                showAllAuthors();
-                break;
-            case 2:
-                getAuthorById();
-                break;
-            default:
-                System.out.println("There is no such option");
-                break;
-        }
+    @GetMapping("/{id}")
+    public Author getAuthorById(@PathVariable("id") Long id){
+        return authorService.getAuthorById(id).get();
     }
 
-    public void showAllAuthors(){
-        authorService.showAllAuthors();
-    }
-
-    public Optional<Author> getAuthorById(){
-        System.out.println("Enter author id: ");
-        Long id = sc.nextLong();
-        return authorService.getAuthorById(id);
+    @GetMapping("/find/")
+    public List<Author> getAuthorByName(@RequestParam("name") String name){
+        return authorService.getAuthorByName(name);
     }
 
 

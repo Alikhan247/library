@@ -1,15 +1,18 @@
 package kz.iitu.alikhan.library.serivce;
 
 
+import kz.iitu.alikhan.library.entity.Author;
 import kz.iitu.alikhan.library.entity.Book;
 import kz.iitu.alikhan.library.entity.RentBooks;
 import kz.iitu.alikhan.library.entity.User;
+import kz.iitu.alikhan.library.repository.AuthorRepository;
 import kz.iitu.alikhan.library.repository.BookRepository;
 import kz.iitu.alikhan.library.repository.RentBooksRepository;
 import kz.iitu.alikhan.library.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -18,6 +21,7 @@ public class MainService {
     private UserRepository userRepository;
     private BookRepository bookRepository;
     private RentBooksRepository rentBooksRepository;
+    private AuthorRepository authorRepository;
 
     public MainService(UserRepository userRepository, BookRepository bookRepository, RentBooksRepository rentBooksRepository) {
         this.userRepository = userRepository;
@@ -35,6 +39,12 @@ public class MainService {
             if (book.isAvailable() == true) {
                 RentBooks issuedBooks = new RentBooks(user, book);
                 rentBooksRepository.save(issuedBooks);
+
+//                book.getAuthors();
+//
+//                Author a = new Author();
+//                a.getBooks().add(book);
+//                authorRepository.save(a);
 
                 book.setAvailable(false);
                 bookRepository.save(book);
@@ -62,10 +72,8 @@ public class MainService {
 
 
 
-    public void showAllUsers() {
-        for (User user : userRepository.findAll()) {
-            System.out.println(user.toString());
-        }
+    public List<User> showAllUsers() {
+        return userRepository.findAll();
     }
 
     private boolean isUserExist(User user) {
