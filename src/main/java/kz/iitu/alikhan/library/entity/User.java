@@ -21,8 +21,6 @@ public class User implements UserDetails {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "user")
-    private List<RentBooks> rentBooks;
 
     @Column(unique = true)
     private String username;
@@ -34,6 +32,9 @@ public class User implements UserDetails {
 
     public User() {
     }
+
+    @OneToMany(mappedBy = "user")
+    private List<RentBooks> rentBooks;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
