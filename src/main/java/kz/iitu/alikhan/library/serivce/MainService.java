@@ -9,6 +9,11 @@ import kz.iitu.alikhan.library.repository.AuthorRepository;
 import kz.iitu.alikhan.library.repository.BookRepository;
 import kz.iitu.alikhan.library.repository.RentBooksRepository;
 import kz.iitu.alikhan.library.repository.UserRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class MainService {
+public class MainService implements UserDetailsService {
 
     private UserRepository userRepository;
     private BookRepository bookRepository;
@@ -83,4 +88,25 @@ public class MainService {
         } else
             return true;
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null)
+            throw new UsernameNotFoundException("User with username: " + username + " is not found");
+
+        return user;
+    }
+
+
+    public User saveUser(User user) {
+        user.setPassword(passwordEncoder().encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
 }

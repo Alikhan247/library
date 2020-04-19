@@ -4,6 +4,7 @@ import kz.iitu.alikhan.library.entity.Book;
 import kz.iitu.alikhan.library.entity.User;
 import kz.iitu.alikhan.library.serivce.BookService;
 import kz.iitu.alikhan.library.serivce.MainService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,6 @@ public class MainController {
 
     private final BookService bookService;
 
-
     public MainController(MainService mainService, BookService bookService) {
         this.mainService = mainService;
         this.bookService = bookService;
@@ -26,13 +26,18 @@ public class MainController {
 
 
     @GetMapping("")
-    public List<User> showAllUsers() {
+    public List<User> getAllUsers() {
         return mainService.showAllUsers();
     }
 
     @GetMapping("/{id}")
     public User findUserById(@PathVariable("id") Long id){
         return mainService.findUserById(id).orElse(null);
+    }
+
+    @PostMapping("/register")
+    public User createUser(@RequestBody User user){
+        return mainService.saveUser(user);
     }
 
     @PostMapping("/issue/")
