@@ -1,10 +1,14 @@
 package kz.iitu.alikhan.library.entity;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-
+@Data
 @Entity
 public class RentBooks {
     @Id
@@ -27,30 +31,5 @@ public class RentBooks {
 
     public RentBooks() {
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
 
 }

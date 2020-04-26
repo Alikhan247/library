@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/users/issue").hasAuthority("ADMIN")
                 .antMatchers("/users/return").hasAuthority("ADMIN")
-                .antMatchers("/auth/**", "/users/register").permitAll()
+                .antMatchers("/auth/**", "/users/register", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**").permitAll()
 
                 .antMatchers(HttpMethod.GET, "/books").permitAll()
                 .antMatchers(HttpMethod.GET, "/authors").permitAll()

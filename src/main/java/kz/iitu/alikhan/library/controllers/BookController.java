@@ -1,5 +1,6 @@
 package kz.iitu.alikhan.library.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import kz.iitu.alikhan.library.entity.Author;
 import kz.iitu.alikhan.library.entity.Book;
 import kz.iitu.alikhan.library.entity.Genre;
@@ -24,17 +25,20 @@ public class BookController {
         this.authorController = authorController;
     }
 
+    @ApiOperation(value = "Get all books", response = List.class)
     @GetMapping("")
     public List<Book> showAllBooks() {
         return bookService.showAllBooks();
     }
 
 
+    @ApiOperation(value = "Get specific book by id", response = Book.class)
     @GetMapping("/{id}")
     public Book findBookById(@PathVariable Long id) {
         return bookService.findBookById(id).orElse(null);
     }
 
+    @ApiOperation(value = "Get list of Books with title (search)", response = List.class)
     @GetMapping("/find/")
     public List<Book> findBook(@RequestParam("title") String title) {
         return bookService.findBook(title);
